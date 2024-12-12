@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abaixo de Zero - Cadastro de Produtos</title>
+  <link rel="shortcut icon" href="img/logo.png">
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(90deg, #000000, #7b7b7b);
+      font-family: 'Arial', sans-serif;
+      background-size: 100% 150%;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #333;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #ffd700, #e4b601, #ffeb3b);
+      padding: 15px 20px;
+      width: 90%;
+      max-width: 1200px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      width: 80px;
+    }
+
+    .menu-link {
+      text-decoration: none;
+      color: #000;
+      margin: 0 10px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .menu-link:hover {
+      color: #555;
+    }
+
+    .btn-voltar {
+      background-color: rgb(185, 29, 29);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-voltar:hover {
+      background-color: rgb(150, 20, 20);
+    }
+
+    .cadastro-container {
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .cadastro-container h1 {
+      font-size: 22px;
+      color: #000;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .input-container {
+      margin: 15px;
+      flex: 1;
+      min-width: 250px;
+      max-width: 300px;
+    }
+
+    .input-container h2 {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: border-color 0.3s ease-in-out;
+    }
+
+    input:focus {
+      border-color: #ffd700;
+      outline: none;
+      box-shadow: 0 0 5px rgba(255, 204, 0, 0.8);
+    }
+
+    .btn-cadastrar {
+      display: block;
+      margin: 20px auto 0;
+      padding: 12px 30px;
+      background-color: #ffcc00;
+      color: #333;
+      border: none;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .btn-cadastrar:hover {
+      background-color: #ffd700;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .menu-link {
+        margin: 5px 0;
+      }
+
+      .cadastro-container {
+        padding: 20px;
+      }
+    }
+
+    .rodape {
+            margin-top: 150px;
+            color: #a8a8a8;
+            text-align: center;
+            font-size: 14px;
+        }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <img class="logo" src="img/logo.png" alt="Logo">
+    <a class="menu-link" href="consultar_banco.html">Consultar</a>
+    <a href="homepage.html"><button class="btn-voltar">Voltar</button></a>
+  </div>
+
+
+  <div class="cadastro-container">
+    <h1>CADASTRAR PRODUTOS</h1>
+    <div class="input-group">
+      <div class="input-container">
+        <h2>Produto</h2>
+        <input type="text" id="produto" placeholder="Informe o produto">
+      </div>
+      <div class="input-container">
+        <h2>Quantidade</h2>
+        <input type="number" id="quantidade" placeholder="Informe a quantidade">
+      </div>
+      <div class="input-container">
+        <h2>Preço</h2>
+        <input type="text" id="preco" placeholder="Informe o preço">
+      </div>
+    </div>
+    <div class="input-group">
+      <div class="input-container">
+        <h2>Marca</h2>
+        <input type="text" id="marca" placeholder="Informe a marca">
+      </div>
+      <div class="input-container">
+        <h2>Categoria</h2>
+        <input type="text" id="categoria" placeholder="Informe a categoria">
+      </div>
+      <div class="input-container">
+        <h2>Peso</h2>
+        <input type="text" id="peso" placeholder="Informe o peso">
+      </div>
+      <div class="input-container">
+        <h2>Código</h2>
+        <input type="text" id="codigo" placeholder="Informe o código">
+      </div>
+    </div>
+    <button class="btn-cadastrar" onclick="cadastro()">Cadastrar</button>
+  </div>
+
+  <div class="rodape">
+    <h4>Desenvolvido por: &copy; Ariany Pantaleão, &copy; Leonardo Galdino</h4>
+</div>
+
+  <script>
+    function cadastro() {
+      const produto = document.getElementById('produto').value;
+      const quantidade = document.getElementById('quantidade').value;
+      const preco = document.getElementById('preco').value;
+      const marca = document.getElementById('marca').value;
+      const categoria = document.getElementById('categoria').value;
+      const peso = document.getElementById('peso').value;
+      const codigo = document.getElementById('codigo').value;
+
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ produto, quantidade, preco, marca, categoria, peso, codigo })
+      };
+
+      fetch("http://127.0.0.1:8080/cadastro_produtos", options)
+        .then(response => response.json())
+        .then(data => alert(data.mensagem));
+    }
+  </script>
+</body>
+
+</html>

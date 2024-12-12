@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abaixo de Zero - Cadastro de Usuário</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="img/logo.png">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(90deg, #000000, #7b7b7b);
+      font-family: 'Roboto', Arial, sans-serif;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #333;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #ffcc00;
+      padding: 15px 20px;
+      width: 90%;
+      max-width: 1200px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      width: 80px;
+    }
+
+    .menu-link {
+      text-decoration: none;
+      color: #000;
+      margin: 0 10px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .menu-link:hover {
+      color: #555;
+    }
+
+    .btn-sair {
+      background-color: red;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-sair:hover {
+      background-color: #cc0000;
+    }
+
+
+    .cadastro-container {
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .cadastro-container h1 {
+      font-size: 22px;
+      color: #000;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .input-container {
+      margin-bottom: 15px;
+    }
+
+    .input-container h2 {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: border-color 0.3s ease-in-out;
+    }
+
+    input:focus {
+      border-color: #ffcc00;
+      outline: none;
+      box-shadow: 0 0 5px rgba(255, 204, 0, 0.8);
+    }
+
+    .btn-cadastrar {
+      width: 100%;
+      padding: 12px;
+      background-color: #ffcc00;
+      color: #333;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .btn-cadastrar:hover {
+      background-color: #ffd700;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .menu-link {
+        margin: 5px 0;
+      }
+
+      .cadastro-container {
+        padding: 20px;
+      }
+    }
+
+    .rodape {
+            margin-top: 20px;
+            color: #a8a8a8;
+            text-align: center;
+            font-size: 14px;
+        }
+  </style>
+
+</head>
+
+<body>
+  <div class="header">
+    <img class="logo" src="img/logo.png" alt="Logo">
+
+    <button class="btn-sair" onclick="voltar()">Sair</button>
+  </div>
+
+  <div class="cadastro-container">
+    <h1>CADASTRO</h1>
+    <div class="input-container">
+      <h2>USUÁRIO</h2>
+      <input type="text" id="usuario" placeholder="Informe seu usuário de acesso">
+    </div>
+    <div class="input-container">
+      <h2>SENHA</h2>
+      <input type="password" id="senha" placeholder="Digite a sua senha">
+    </div>
+    <button class="btn-cadastrar" onclick="cadastro()">Cadastrar</button>
+  </div>
+
+  <div class="rodape">
+    <h4>Desenvolvido por: &copy; Ariany Pantaleão, &copy; Leonardo Galdino</h4>
+</div>
+
+  <script>
+    function cadastro() {
+      const usuario = document.getElementById('usuario').value;
+      const senha = document.getElementById('senha').value;
+
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario, senha })
+      };
+
+      fetch("http://127.0.0.1:8080/cadastro_usuarios", options)
+        .then(response => response.json())
+        .then(data => {
+          alert(data.sucesso ? "Usuário cadastrado!" : data.mensagem);
+        });
+    }
+
+    function voltar() {
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+
+</html>

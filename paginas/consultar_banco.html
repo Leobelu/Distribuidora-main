@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abaixo de Zero - Consulta</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/png">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(90deg, #000000, #7b7b7b);
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #ffd700, #e4b601, #ffeb3b);
+            padding: 15px 20px;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header img {
+            width: 100px;
+        }
+
+        .header h1 {
+            margin: 15px 0;
+            color: #000000;
+        }
+
+        button {
+            height: 50px;
+            background-color: rgb(185, 29, 29);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: rgb(150, 20, 20);
+        }
+
+        table {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px 0;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #ffd700;
+            color: black;
+            font-weight: bold;
+        }
+
+        td {
+            color: #555;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        form input[type="number"] {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+
+            form {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        .menu-link {
+            margin: 5px 0;
+        }
+
+        .btn-voltar:hover {
+            background-color: rgb(150, 20, 20);
+        }
+
+        .btn-voltar {
+            background-color: rgb(185, 29, 29);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .menu-link {
+            text-decoration: none;
+            color: #000;
+            margin: 0 10px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .menu-link:hover {
+            color: #555;
+        }
+
+        .rodape {
+            margin-top: 500px;
+            color: #a8a8a8;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <img class="logo" src="img/logo.png" alt="Logo">
+        <a class="menu-link" href="consultar_banco.html">Consultar</a>
+        <a href="homepage.html"><button class="btn-voltar">Voltar</button></a>
+    </div>
+
+    <table id="tabela">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Código</th>
+                <th>Marca</th>
+                <th>Categoria</th>
+                <th>Peso</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div class="rodape">
+        <h4>Desenvolvido por: &copy; Ariany Pantaleão, &copy; Leonardo Galdino</h4>
+    </div>
+
+    <script>
+
+        fetch("/consultar_produtos")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Falha ao consultar produtos");
+                }
+                return response.json();
+            })
+            .then(response => {
+                console.log(response);
+
+                response.forEach(produto => {
+                    const bloco = `
+                        <tr>
+                            <td>${produto.id}</td>
+                            <td>${produto.produto}</td>
+                            <td>${produto.quantidade}</td>
+                            <td>${produto.preco}</td>
+                            <td>${produto.codigo}</td>
+                            <td>${produto.marca}</td>
+                            <td>${produto.categoria}</td>
+                            <td>${produto.peso}</td>
+                            <td>
+                                <form action="/carrinho" method="POST">
+                                    <input type="hidden" name="produto_id" value="${produto.Id}">
+                                    <input type="number" name="quantidade" value="1" min="1">
+                                    <input type="submit" value="Comprar">
+                                </form>
+                            </td>
+                        </tr>
+                    `;
+                    $("#tabela tbody").append(bloco);
+                });
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+            });
+    </script>
+</body>
+
+</html>

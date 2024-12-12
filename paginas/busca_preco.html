@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abaixo de Zero - Busca Preço</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/png">
+    <style>
+
+        body {
+            background: linear-gradient(90deg, #000000, #7b7b7b);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #4d4d4d;
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .header {
+            margin-top: -300px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #ffd700, #e4b601, #ffeb3b);
+            padding: 15px 20px;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 80px;
+        }
+
+        .menu-link {
+            text-decoration: none;
+            color: #000;
+            margin: 0 10px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .menu-link:hover {
+            color: #555;
+        }
+
+        .btn-voltar {
+            background-color: rgb(185, 29, 29);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-voltar:hover {
+            background-color: rgb(150, 20, 20);
+        }
+
+        #Pagina {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 150px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .input-container input {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ff8800;
+            border-radius: 15px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #ffcc00;
+            color: #000000;
+            font-size: 18px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: center;
+            width: 300px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+            background-color: #ffee00;
+        }
+
+        .rodape {
+            margin-top: 100px;
+            color: #a8a8a8;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .voltar {
+            margin-top: 20px;
+            width: 120px;
+            height: 50px;
+            background-color: #ff8800;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sair:hover {
+            background-color: #ffee00;
+        }
+
+        table {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #000000;
+            background-color: #f1f1f1;
+            color: #000;
+        }
+
+        th {
+            background-color: #ff8800;
+            color: rgb(0, 0, 0);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <img class="logo" src="img/logo.png" alt="Logo">
+        <a class="menu-link" href="consultar_banco.html">Consultar</a>
+        <a href="homepage.html"><button class="btn-voltar">Voltar</button></a>
+    </div>
+
+    <div id="Pagina">
+        <div class="input-container">
+            <input type="text" id="codigoOuDescricao" placeholder="Digite o código ou descrição do produto">
+            <br>
+            <button class="button" onclick="buscarProduto()">Buscar</button>
+        </div>
+
+        <table id="resultado">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Marca</th>
+                    <th>Categoria</th>
+                    <th>Peso</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="rodape">
+        <h4>Desenvolvido por: &copy; Ariany Pantaleão, &copy; Leonardo Galdino</h4>
+    </div>
+
+    <script>
+        function buscarProduto() {
+            const query = document.getElementById("codigoOuDescricao").value;
+            if (query) {
+                fetch(`/buscar_produto?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.querySelector("#resultado tbody").innerHTML = '';
+
+                        if (data.length === 0) {
+                            document.querySelector("#resultado tbody").innerHTML = '<tr><td colspan="7">Nenhum produto encontrado</td></tr>';
+                            return;
+                        }
+
+
+                        data.forEach(produto => {
+                            const row = `
+                                <tr>
+                                    <td>${produto.id}</td>
+                                    <td>${produto.produto}</td>
+                                    <td>${produto.preco}</td>
+                                    <td>${produto.marca}</td>
+                                    <td>${produto.categoria}</td>
+                                    <td>${produto.peso}</td>
+                                </tr>
+                            `;
+                            document.querySelector("#resultado tbody").innerHTML += row;
+                        });
+                    })
+                    .catch(error => {
+                        alert("Erro ao buscar produto.");
+                    });
+            } else {
+                alert("Por favor, insira um código ou descrição do produto.");
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
